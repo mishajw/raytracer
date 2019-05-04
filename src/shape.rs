@@ -7,7 +7,7 @@ use crate::Vec3;
 /// A shape in the scene
 pub struct Shape {
     shape_type: ShapeType,
-    texture_type: TextureType,
+    _texture_type: TextureType,
     color: Color,
 }
 
@@ -16,7 +16,7 @@ impl Shape {
     pub fn circle(centre: Vec3, radius: f64, color: Color) -> Shape {
         Shape {
             shape_type: ShapeType::Circle { centre, radius },
-            texture_type: TextureType::Diffuse,
+            _texture_type: TextureType::Diffuse,
             color,
         }
     }
@@ -31,6 +31,7 @@ impl Shape {
         _tracer: &Tracer,
     ) -> Color
     {
+        // TODO: Implement more complex rendering based on `texture_type`
         self.color
     }
 
