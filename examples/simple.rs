@@ -1,5 +1,7 @@
 extern crate raytracer;
 
+use std::path::Path;
+
 use raytracer::Camera;
 use raytracer::Color;
 use raytracer::Shape;
@@ -18,5 +20,11 @@ fn main() {
 
     let world = World::new(camera, &shapes, Color::black());
 
-    raytracer::render(world, 600, 400, 1.0, "raytracer.png");
+    raytracer::render(
+        world,
+        600,
+        400,
+        1.0,
+        Path::new("examples-output/simple.png"),
+    );
 }

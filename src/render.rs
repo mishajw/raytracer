@@ -1,3 +1,6 @@
+use std::fs;
+use std::path::Path;
+
 use image::ImageBuffer;
 use image::Rgb;
 
@@ -13,7 +16,7 @@ pub fn render(
     width: usize,
     height: usize,
     field_of_view: f64,
-    output_path: &str,
+    output_path: &Path,
 )
 {
     let tracer = Tracer::new(&world);
@@ -61,5 +64,10 @@ pub fn render(
     }
     // Save the rendered image
     // TODO: Replace with Result<>
+    let output_directory = output_path.parent();
+    if output_directory.is_some() && !output_directory.unwrap().exists() {
+        fs::create_dir_all(output_directory.unwrap())
+            .expect("Failed to create image directory");
+    }
     image.save(output_path).expect("Failed to save image");
 }
