@@ -8,12 +8,13 @@ use raytracer::World;
 
 fn main() {
     let shapes = [
-        Shape::circle(Vec3::new(0, 1, -0.5), 0.5, Color::red()),
-        Shape::circle(Vec3::new(0, 1, 0), 0.5, Color::green()),
-        Shape::circle(Vec3::new(0, 1, 0.5), 0.5, Color::blue()),
+        Shape::circle(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
+        Shape::circle(Vec3::new(0, 1, 0), 0.25, Color::green()),
+        Shape::circle(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
     ];
 
-    let camera = Camera::new(Vec3::new(0, 0, 0), Vec3::new(0, 1, 0));
+    let camera =
+        Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
 
     let world = World::new(camera, &shapes, Color::black());
 
