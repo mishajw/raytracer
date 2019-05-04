@@ -22,3 +22,15 @@ pub fn get_camera_unit_vectors(d: &Vec3) -> (Vec3, Vec3) {
     let b = Vec3::new(d.x / d.y, 1, -(d.y / d.z) * 2.0);
     (a.unit(), b.unit())
 }
+
+/// Factorize `ax^2 + bx + c` given the coefficients `a`, `b`, and `c`
+///
+/// Returns the two possible solutions for `x`.
+pub fn factorize(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {
+    let in_sqrt = b.powf(2.0) - 4.0 * a * c;
+    let denom = 2.0 * a;
+    if in_sqrt.is_sign_negative() || denom == 0.0 {
+        return None;
+    }
+    Some(((-b + in_sqrt.sqrt()) / denom, (-b - in_sqrt.sqrt()) / denom))
+}

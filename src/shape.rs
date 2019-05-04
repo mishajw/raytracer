@@ -1,3 +1,4 @@
+use crate::math;
 use crate::Color;
 use crate::Ray;
 use crate::Tracer;
@@ -38,8 +39,21 @@ impl Shape {
     /// If it does collide, return the scalar multiple of `ray.direction` where
     /// the ray meets the shape.
     pub fn get_collision(&self, ray: &Ray) -> Option<f64> {
-        // TODO: Implement
-        None
+        match self.shape_type {
+            ShapeType::Circle { centre, radius } => {
+                // Make the ray's centre the origin to simplify
+                let c = centre - ray.position;
+                let d = ray.direction;
+                let a = d.x.powf(2.0) + d.y.powf(2.0) + d.z.powf(2.0);
+                let b =
+                    (2.0 * d.x * c.x) + (2.0 * d.y * c.y) + (2.0 * d.z * c.z);
+                let c = c.x.powf(2.0) + c.y.powf(2.0) + c.z.powf(2.0);
+                match math::factorize(a, b, c - radius.powf(2.0)) {
+                    Some((x, y)) => Some(x.min(y)),
+                    None => None,
+                }
+            }
+        }
     }
 }
 
