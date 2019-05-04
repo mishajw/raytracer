@@ -13,9 +13,9 @@ pub struct Shape {
 
 impl Shape {
     #[allow(missing_docs)]
-    pub fn circle(centre: Vec3, radius: f64, color: Color) -> Shape {
+    pub fn sphere(centre: Vec3, radius: f64, color: Color) -> Shape {
         Shape {
-            shape_type: ShapeType::Circle { centre, radius },
+            shape_type: ShapeType::Sphere { centre, radius },
             _texture_type: TextureType::Diffuse,
             color,
         }
@@ -41,7 +41,7 @@ impl Shape {
     /// the ray meets the shape.
     pub fn get_collision(&self, ray: &Ray) -> Option<f64> {
         match self.shape_type {
-            ShapeType::Circle { centre, radius } => {
+            ShapeType::Sphere { centre, radius } => {
                 // Make the ray's centre the origin to simplify
                 let c = centre - ray.position;
                 let d = ray.direction;
@@ -59,7 +59,7 @@ impl Shape {
 }
 
 enum ShapeType {
-    Circle { centre: Vec3, radius: f64 },
+    Sphere { centre: Vec3, radius: f64 },
 }
 
 enum TextureType {

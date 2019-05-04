@@ -10,9 +10,9 @@ use raytracer::World;
 
 fn main() {
     let shapes = [
-        Shape::circle(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
-        Shape::circle(Vec3::new(0, 1, 0), 0.25, Color::green()),
-        Shape::circle(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
+        Shape::sphere(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
+        Shape::sphere(Vec3::new(0, 1, 0), 0.25, Color::green()),
+        Shape::sphere(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
     ];
 
     let camera =
