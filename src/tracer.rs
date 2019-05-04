@@ -22,5 +22,5 @@ impl<'world> Tracer<'world> {
     pub fn new(world: &'world World<'world>) -> Tracer { Tracer { world } }
 
     /// Trace the ray and get what object (if any) it collides with in the world
-    pub fn trace(&self, _ray: Ray) -> Option<TraceResult<'world>> { None }
+    pub fn trace(&self, _ray: &Ray) -> Option<TraceResult<'world>> { None }
 }

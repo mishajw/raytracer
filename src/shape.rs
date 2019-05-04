@@ -1,4 +1,6 @@
 use crate::Color;
+use crate::Ray;
+use crate::Tracer;
 use crate::Vec3;
 
 /// A shape in the scene
@@ -16,6 +18,19 @@ impl Shape {
             texture_type: TextureType::Diffuse,
             color,
         }
+    }
+
+    /// Get the color that a `ray` would see if it hit the shape at `position`
+    ///
+    /// `tracer` is passed so that new rays can be cast.
+    pub fn get_color(
+        &self,
+        _ray: &Ray,
+        _position: Vec3,
+        _tracer: &Tracer,
+    ) -> Color
+    {
+        self.color
     }
 }
 

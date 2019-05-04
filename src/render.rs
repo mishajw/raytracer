@@ -29,7 +29,14 @@ pub fn render(world: World, width: usize, height: usize, field_of_view: f64) {
                 world.camera.position,
                 (image_point - world.camera.position).unit(),
             );
-            let _trace_result = tracer.trace(ray);
+            let trace_result = tracer.trace(&ray);
+            if let Some(trace_result) = trace_result {
+                trace_result.shape.get_color(
+                    &ray,
+                    trace_result.collision_position,
+                    &tracer,
+                );
+            }
             unimplemented!();
         }
     }
