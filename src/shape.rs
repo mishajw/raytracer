@@ -32,6 +32,15 @@ impl Shape {
     {
         self.color
     }
+
+    /// Check if a ray collides with this shape
+    ///
+    /// If it does collide, return the scalar multiple of `ray.direction` where
+    /// the ray meets the shape.
+    pub fn get_collision(&self, ray: &Ray) -> Option<f64> {
+        // TODO: Implement
+        None
+    }
 }
 
 enum ShapeType {

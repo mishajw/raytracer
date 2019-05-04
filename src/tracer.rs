@@ -22,5 +22,20 @@ impl<'world> Tracer<'world> {
     pub fn new(world: &'world World<'world>) -> Tracer { Tracer { world } }
 
     /// Trace the ray and get what object (if any) it collides with in the world
-    pub fn trace(&self, _ray: &Ray) -> Option<TraceResult<'world>> { None }
+    pub fn trace(&self, ray: &Ray) -> Option<TraceResult<'world>> {
+        self.world
+            .shapes
+            .iter()
+            // Get pair of `(shape, ray scalar)`
+            .flat_map(|shape| {
+                shape.get_collision(&ray).map(|scalar| (shape, scalar))
+            })
+            // Get the lowest by `ray scalar`
+            .min_by(|(_, s1), (_, s2)| s1.partial_cmp(s2).unwrap())
+            // Map to a `TraceResult`
+            .map(|(shape, scalar)| TraceResult {
+                shape,
+                collision_position: ray.point(scalar),
+            })
+    }
 }

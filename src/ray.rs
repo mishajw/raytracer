@@ -17,4 +17,9 @@ impl Ray {
             direction,
         }
     }
+
+    /// Get the point on the ray given by a scalar multiple of the direction
+    pub fn point(&self, scalar: f64) -> Vec3 {
+        self.position + self.direction * scalar
+    }
 }
