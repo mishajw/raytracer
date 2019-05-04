@@ -1,10 +1,12 @@
 use crate::math;
 use crate::Ray;
+use crate::Tracer;
 use crate::World;
 
 /// Render an image of the world
 // TODO: Is field_of_view the correct term?
 pub fn render(world: World, width: usize, height: usize, field_of_view: f64) {
+    let tracer = Tracer::new(&world);
     // The centre of the image plane that we project through
     let image_plane_centre = world.camera.position + world.camera.direction;
     // The size (in world units) of a pixel
@@ -23,10 +25,11 @@ pub fn render(world: World, width: usize, height: usize, field_of_view: f64) {
             let image_point = image_plane_centre
                 + (image_plane_x_unit * offset_x_pixels as f64 * pixel_size)
                 + (image_plane_y_unit * offset_y_pixels as f64 * pixel_size);
-            let _ray = Ray::new(
+            let ray = Ray::new(
                 world.camera.position,
                 (image_point - world.camera.position).unit(),
             );
+            let _trace_result = tracer.trace(ray);
             unimplemented!();
         }
     }
