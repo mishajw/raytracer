@@ -2,6 +2,8 @@
 
 #![warn(missing_docs)]
 
+extern crate image;
+
 mod camera;
 mod color;
 pub mod math;

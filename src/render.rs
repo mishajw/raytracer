@@ -1,3 +1,6 @@
+use image::ImageBuffer;
+use image::Rgb;
+
 use crate::math;
 use crate::Ray;
 use crate::Tracer;
@@ -5,8 +8,16 @@ use crate::World;
 
 /// Render an image of the world
 // TODO: Is field_of_view the correct term?
-pub fn render(world: World, width: usize, height: usize, field_of_view: f64) {
+pub fn render(
+    world: World,
+    width: usize,
+    height: usize,
+    field_of_view: f64,
+    output_path: &str,
+)
+{
     let tracer = Tracer::new(&world);
+    let mut image = ImageBuffer::new(width as u32, height as u32);
     // The centre of the image plane that we project through
     let image_plane_centre = world.camera.position + world.camera.direction;
     // The size (in world units) of a pixel
@@ -30,14 +41,21 @@ pub fn render(world: World, width: usize, height: usize, field_of_view: f64) {
                 (image_point - world.camera.position).unit(),
             );
             let trace_result = tracer.trace(&ray);
-            if let Some(trace_result) = trace_result {
-                trace_result.shape.get_color(
+            let color = match trace_result {
+                Some(result) => result.shape.get_color(
                     &ray,
-                    trace_result.collision_position,
+                    result.collision_position,
                     &tracer,
-                );
-            }
-            unimplemented!();
+                ),
+                None => world.background_color,
+            };
+            image.put_pixel(
+                image_x as u32,
+                image_y as u32,
+                Rgb([color.red, color.green, color.blue]),
+            )
         }
     }
+    // TODO: Replace with Result<>
+    image.save(output_path).expect("Failed to save image");
 }

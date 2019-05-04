@@ -15,7 +15,7 @@ fn main() {
 
     let camera = Camera::new(Vec3::new(0, 0, 0), Vec3::new(0, 1, 0));
 
-    let world = World::new(camera, &shapes);
+    let world = World::new(camera, &shapes, Color::black());
 
-    raytracer::render(world, 600, 400, 1.0);
+    raytracer::render(world, 600, 400, 1.0, "raytracer.png");
 }

@@ -5,3 +5,4 @@ authors = ["Misha Wagner <mishajw@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+image = "*"

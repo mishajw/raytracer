@@ -1,9 +1,10 @@
 /// RGB color
 #[derive(Clone, Copy)]
+#[allow(missing_docs)]
 pub struct Color {
-    red: u8,
-    green: u8,
-    blue: u8,
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8,
 }
 
 impl Color {
@@ -17,4 +18,7 @@ impl Color {
 
     #[allow(missing_docs)]
     pub fn blue() -> Color { Color::new(0, 0, 255) }
+
+    #[allow(missing_docs)]
+    pub fn black() -> Color { Color::new(0, 0, 0) }
 }
