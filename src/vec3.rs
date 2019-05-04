@@ -19,6 +19,12 @@ impl Vec3 {
         z: Z,
     ) -> Self
     {
+        let x = x.into();
+        let y = y.into();
+        let z = z.into();
+        assert!(x.is_finite());
+        assert!(y.is_finite());
+        assert!(z.is_finite());
         Vec3 {
             x: x.into(),
             y: y.into(),
