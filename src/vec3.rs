@@ -1,8 +1,14 @@
+use std::ops::Add;
+use std::ops::Mul;
+use std::ops::Sub;
+
 /// Vector with 3 dimensions
+#[allow(missing_docs)]
+#[derive(Clone, Copy)]
 pub struct Vec3 {
-    x: f64,
-    y: f64,
-    z: f64,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
 }
 
 impl Vec3 {
@@ -18,5 +24,39 @@ impl Vec3 {
             y: y.into(),
             z: z.into(),
         }
+    }
+
+    /// Check if the vector has unit length
+    pub fn is_unit(&self) -> bool { (self.magnitude() - 1.0).abs() < 0.0001 }
+
+    /// Get the unit vector in the same direction as this vector
+    pub fn unit(&self) -> Vec3 {
+        let magnitude = self.magnitude();
+        Vec3::new(self.x / magnitude, self.y / magnitude, self.z / magnitude)
+    }
+
+    fn magnitude(&self) -> f64 {
+        (self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0)).sqrt()
+    }
+}
+
+impl Add<Vec3> for Vec3 {
+    type Output = Vec3;
+    fn add(self, rhs: Vec3) -> Vec3 {
+        Vec3::new(self.x + rhs.x, self.y + rhs.y, self.z + rhs.z)
+    }
+}
+
+impl Sub<Vec3> for Vec3 {
+    type Output = Vec3;
+    fn sub(self, rhs: Vec3) -> Vec3 {
+        Vec3::new(self.x - rhs.x, self.y - rhs.y, self.z - rhs.z)
+    }
+}
+
+impl Mul<f64> for Vec3 {
+    type Output = Vec3;
+    fn mul(self, rhs: f64) -> Vec3 {
+        Vec3::new(self.x * rhs, self.y * rhs, self.z * rhs)
     }
 }

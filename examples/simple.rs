@@ -17,5 +17,5 @@ fn main() {
 
     let world = World::new(camera, &shapes);
 
-    raytracer::render(world);
+    raytracer::render(world, 600, 400, 1.0);
 }

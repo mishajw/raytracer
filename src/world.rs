@@ -3,8 +3,10 @@ use crate::Shape;
 
 /// The scene to be rendered
 pub struct World<'shapes> {
-    camera: Camera,
-    shapes: &'shapes [Shape],
+    /// The camera we look out of in the scene
+    pub camera: Camera,
+    /// All the shapes in the scene
+    pub shapes: &'shapes [Shape],
 }
 
 impl<'shapes> World<'shapes> {
