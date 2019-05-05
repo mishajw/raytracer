@@ -46,7 +46,6 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Diffuse<ShapeT> {
             })
             .sum();
         let total_intensity = total_intensity.min(1.0);
-        let gray_color = (total_intensity * 255.0) as u8;
-        Color::new(gray_color, gray_color, gray_color)
+        Color::new(total_intensity, total_intensity, total_intensity)
     }
 }

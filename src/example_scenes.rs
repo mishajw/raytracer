@@ -80,11 +80,10 @@ fn save_image(image: Image, output_path: &Path) {
     for x in 0..image.width {
         for y in 0..image.height {
             let color = image.get(x, y);
-            image_buffer.put_pixel(
-                x as u32,
-                y as u32,
-                Rgb([color.red, color.green, color.blue]),
-            );
+            let red = (color.red * 255.0) as u8;
+            let green = (color.green * 255.0) as u8;
+            let blue = (color.blue * 255.0) as u8;
+            image_buffer.put_pixel(x as u32, y as u32, Rgb([red, green, blue]));
         }
     }
     // Create output directory
