@@ -29,7 +29,7 @@ impl Ray {
     pub fn point(&self, scalar: f64) -> Vec3 {
         // We shouldn't have to back-trace rays anywhere
         assert!(scalar >= 0.0);
-        self.position + self.direction * (scalar + POINT_BIAS)
+        self.position + self.direction * (scalar - POINT_BIAS)
     }
 }
 

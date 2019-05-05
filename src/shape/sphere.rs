@@ -31,7 +31,7 @@ impl Shape for Sphere {
                 if x >= 0.0 && (y < 0.0 || x < y) {
                     Some(x)
                 } else if y >= 0.0 {
-                    Some(x)
+                    Some(y)
                 } else {
                     None
                 }

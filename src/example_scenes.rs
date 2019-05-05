@@ -69,7 +69,10 @@ fn diffuse() -> World {
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
-    let lights = vec![Light::new(Vec3::new(-1, 1, 1), 1.0)];
+    let lights = vec![
+        Light::new(Vec3::new(-1, 1, 1), 0.7),
+        Light::new(Vec3::new(0, 0, 0), 0.3),
+    ];
     World::new(camera, shapes, lights, Color::black())
 }
 
