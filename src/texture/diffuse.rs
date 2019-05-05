@@ -31,7 +31,7 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Diffuse<ShapeT> {
         shape: &ShapeT,
         _ray: &Ray,
         position: Vec3,
-        _tracer: &Tracer,
+        tracer: &Tracer,
         world: &World,
     ) -> Color
     {
@@ -39,10 +39,14 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Diffuse<ShapeT> {
         let total_intensity: f64 = world
             .lights
             .iter()
-            .map(|l| {
+            .filter_map(|l| {
                 let relative_light = l.position - position;
+                let light_ray = Ray::new(position, relative_light.unit());
+                if tracer.trace(&light_ray).is_some() {
+                    return None;
+                }
                 let angle = math::angle(normal, relative_light.unit());
-                (1.0 - angle / f64::consts::PI) * l.intensity
+                Some((1.0 - angle / f64::consts::PI) * l.intensity)
             })
             .sum();
         let total_intensity = total_intensity.min(1.0);

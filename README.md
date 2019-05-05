@@ -15,7 +15,7 @@ Simple toy ray tracer implemented in Rust.
 ## Goals
 
 - [x] Basic ray tracer that renders single-color spheres
-- [ ] Diffuse textures
+- [x] Diffuse textures
 - [ ] Reflective textures
 - [ ] Refractive textures
 - [ ] Parallel execution

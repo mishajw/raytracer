@@ -1,5 +1,11 @@
 use crate::Vec3;
 
+/// Subtract `POINT_BIAS` from a the ray when calculating where an intersection
+/// happened
+///
+/// This helps to remove "shadow acne".
+const POINT_BIAS: f64 = 1e-10;
+
 /// A line in space with a set start point, but no end point
 pub struct Ray {
     /// Starting position of the ray
@@ -22,7 +28,7 @@ impl Ray {
     pub fn point(&self, scalar: f64) -> Vec3 {
         // We shouldn't have to back-trace rays anywhere
         assert!(scalar >= 0.0);
-        self.position + self.direction * scalar
+        self.position + self.direction * (scalar + POINT_BIAS)
     }
 }
 
