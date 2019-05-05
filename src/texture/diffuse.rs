@@ -42,7 +42,7 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Diffuse<ShapeT> {
             .map(|l| {
                 let relative_light = l.position - position;
                 let angle = math::angle(normal, relative_light.unit());
-                (angle / f64::consts::PI) * l.intensity
+                (1.0 - angle / f64::consts::PI) * l.intensity
             })
             .sum();
         let total_intensity = total_intensity.min(1.0);
