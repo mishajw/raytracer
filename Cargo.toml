@@ -10,3 +10,4 @@ path = "src/example_scenes.rs"
 
 [dependencies]
 image = "*"
+criterion = "*"

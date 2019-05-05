@@ -1,15 +1,18 @@
+#[macro_use]
+extern crate criterion;
 extern crate image;
 extern crate raytracer;
 
 use std::fs;
 use std::path::Path;
 
+use criterion::Criterion;
 use image::ImageBuffer;
 use image::Rgb;
-use raytracer::Image;
 
 use raytracer::Camera;
 use raytracer::Color;
+use raytracer::Image;
 use raytracer::Shape;
 use raytracer::Vec3;
 use raytracer::World;
@@ -17,14 +20,23 @@ use raytracer::World;
 const WIDTH: usize = 600;
 const HEIGHT: usize = 400;
 
-fn main() {
+fn run(bench: &mut Criterion) {
+    // Write the images to the example-output directory
     simple(|world| {
-        let image = raytracer::render(world, WIDTH, HEIGHT, 1.0);
+        let image = raytracer::render(&world, WIDTH, HEIGHT, 1.0);
         save_image(image, Path::new("examples-output/simple.png"));
-    })
+    });
+
+    // Set up benchmarks
+    bench.bench_function("simple", |b| {
+        simple(|world| b.iter(|| raytracer::render(&world, WIDTH, HEIGHT, 1.0)))
+    });
 }
 
-fn simple(callback: impl Fn(World)) {
+criterion_group!(benches, run);
+criterion_main!(benches);
+
+fn simple(mut callback: impl FnMut(World)) {
     let shapes = [
         Shape::sphere(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
         Shape::sphere(Vec3::new(0, 1, 0), 0.25, Color::green()),

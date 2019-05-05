@@ -7,7 +7,7 @@ use crate::World;
 /// Render an image of the world
 // TODO: Is field_of_view the correct term?
 pub fn render(
-    world: World,
+    world: &World,
     width: usize,
     height: usize,
     field_of_view: f64,
