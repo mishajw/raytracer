@@ -2,10 +2,9 @@
 
 #![warn(missing_docs)]
 
-extern crate image;
-
 mod camera;
 mod color;
+mod image;
 pub mod math;
 mod ray;
 mod render;
@@ -14,6 +13,7 @@ mod tracer;
 mod vec3;
 mod world;
 
+pub use crate::image::Image;
 pub use camera::Camera;
 pub use color::Color;
 pub use ray::Ray;

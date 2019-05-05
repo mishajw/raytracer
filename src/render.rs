@@ -1,10 +1,5 @@
-use std::fs;
-use std::path::Path;
-
-use image::ImageBuffer;
-use image::Rgb;
-
 use crate::math;
+use crate::Image;
 use crate::Ray;
 use crate::Tracer;
 use crate::World;
@@ -16,11 +11,10 @@ pub fn render(
     width: usize,
     height: usize,
     field_of_view: f64,
-    output_path: &Path,
-)
+) -> Image
 {
     let tracer = Tracer::new(&world);
-    let mut image = ImageBuffer::new(width as u32, height as u32);
+    let mut image = Image::new(width, height);
     // The centre of the image plane that we project through
     let image_plane_centre = world.camera.position + world.camera.direction;
     // The size (in world units) of a pixel
@@ -55,19 +49,8 @@ pub fn render(
                 // If it doesn't collide, use the background color
                 None => world.background_color,
             };
-            image.put_pixel(
-                image_x as u32,
-                image_y as u32,
-                Rgb([color.red, color.green, color.blue]),
-            )
+            image.put(image_x, image_y, color)
         }
     }
-    // Save the rendered image
-    // TODO: Replace with Result<>
-    let output_directory = output_path.parent();
-    if output_directory.is_some() && !output_directory.unwrap().exists() {
-        fs::create_dir_all(output_directory.unwrap())
-            .expect("Failed to create image directory");
-    }
-    image.save(output_path).expect("Failed to save image");
+    image
 }

@@ -1,4 +1,7 @@
+extern crate image;
 extern crate raytracer;
+
+mod util;
 
 use std::path::Path;
 
@@ -14,17 +17,9 @@ fn main() {
         Shape::sphere(Vec3::new(0, 1, 0), 0.25, Color::green()),
         Shape::sphere(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
     ];
-
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
-
     let world = World::new(camera, &shapes, Color::black());
-
-    raytracer::render(
-        world,
-        600,
-        400,
-        1.0,
-        Path::new("examples-output/simple.png"),
-    );
+    let image = raytracer::render(world, 600, 400, 1.0);
+    util::save_image(image, Path::new("examples-output/simple.png"));
 }
