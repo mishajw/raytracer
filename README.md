@@ -12,6 +12,10 @@ Simple toy ray tracer implemented in Rust.
 
 ![diffuse](/examples-output/diffuse.png "Diffuse texture example")
 
+### Reflective texture example
+
+![reflective](/examples-output/reflective.png "Reflective texture example")
+
 ## Goals
 
 - [x] Basic ray tracer that renders single-color spheres

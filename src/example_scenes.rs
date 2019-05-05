@@ -13,6 +13,7 @@ use image::Rgb;
 use raytracer::shape::Shape;
 use raytracer::shape::Sphere;
 use raytracer::texture::Diffuse;
+use raytracer::texture::Reflective;
 use raytracer::texture::Solid;
 use raytracer::Camera;
 use raytracer::Color;
@@ -33,6 +34,11 @@ fn run(bench: &mut Criterion) {
     save_image(simple_image, Path::new("examples-output/simple.png"));
     let diffuse_image = raytracer::render(&diffuse(), WIDTH, HEIGHT, 1.0);
     save_image(diffuse_image, Path::new("examples-output/diffuse.png"));
+    let reflective_image = raytracer::render(&reflective(), WIDTH, HEIGHT, 1.0);
+    save_image(
+        reflective_image,
+        Path::new("examples-output/reflective.png"),
+    );
     println!("Finished creating images in ./examples-output");
 
     // Set up benchmarks
@@ -65,6 +71,24 @@ fn diffuse() -> World {
         Sphere::new(Vec3::new(0, 1, 0), 0.25)
             .with_textures(vec![Solid::new(Color::green()), Diffuse::new()]),
         Sphere::new(Vec3::new(0.5, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::blue()), Diffuse::new()]),
+    ];
+    let camera =
+        Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
+    let lights = vec![
+        Light::new(Vec3::new(-1, 1, 1), 0.7),
+        Light::new(Vec3::new(0, 0, 0), 0.3),
+    ];
+    World::new(camera, shapes, lights, Color::black())
+}
+
+fn reflective() -> World {
+    let shapes = vec![
+        Sphere::new(Vec3::new(-0.5, 3, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::red()), Diffuse::new()]),
+        Sphere::new(Vec3::new(0, 8, 0), 4.0)
+            .with_textures(vec![Reflective::new()]),
+        Sphere::new(Vec3::new(0.5, 2, 0), 0.25)
             .with_textures(vec![Solid::new(Color::blue()), Diffuse::new()]),
     ];
     let camera =

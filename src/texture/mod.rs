@@ -1,9 +1,11 @@
 //! Textures that can draw shapes in different ways
 
 mod diffuse;
+mod reflective;
 mod solid;
 
 pub use diffuse::Diffuse;
+pub use reflective::Reflective;
 pub use solid::Solid;
 
 use crate::shape::Shape;
