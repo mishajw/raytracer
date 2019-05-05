@@ -1,5 +1,6 @@
 use crate::math;
 use crate::shape::Shape;
+use crate::shape::SurfaceNormal;
 use crate::Ray;
 use crate::Vec3;
 
@@ -28,5 +29,11 @@ impl Shape for Sphere {
             Some((x, y)) => Some(x.min(y)),
             None => None,
         }
+    }
+}
+
+impl SurfaceNormal for Sphere {
+    fn get_normal(&self, position: Vec3) -> Vec3 {
+        (position - self.centre).unit()
     }
 }

@@ -12,6 +12,7 @@ use image::Rgb;
 
 use raytracer::shape::Shape;
 use raytracer::shape::Sphere;
+use raytracer::texture::Diffuse;
 use raytracer::texture::Solid;
 use raytracer::Camera;
 use raytracer::Color;
@@ -25,11 +26,13 @@ const SMALL_WIDTH: usize = 60;
 const SMALL_HEIGHT: usize = 40;
 
 fn run(bench: &mut Criterion) {
-    let simple_world = simple();
-
     // Write the images to the example-output directory
-    let image = raytracer::render(&simple_world, WIDTH, HEIGHT, 1.0);
-    save_image(image, Path::new("examples-output/simple.png"));
+    println!("Creating images in ./examples-output");
+    let simple_image = raytracer::render(&simple(), WIDTH, HEIGHT, 1.0);
+    save_image(simple_image, Path::new("examples-output/simple.png"));
+    let diffuse_image = raytracer::render(&diffuse(), WIDTH, HEIGHT, 1.0);
+    save_image(diffuse_image, Path::new("examples-output/diffuse.png"));
+    println!("Finished creating images in ./examples-output");
 
     // Set up benchmarks
     bench.bench_function("simple", |b| {
@@ -48,6 +51,20 @@ fn simple() -> World {
             .with_textures(vec![Solid::new(Color::green())]),
         Sphere::new(Vec3::new(0.5, 1, 0), 0.25)
             .with_textures(vec![Solid::new(Color::blue())]),
+    ];
+    let camera =
+        Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
+    World::new(camera, shapes, Color::black())
+}
+
+fn diffuse() -> World {
+    let shapes = vec![
+        Sphere::new(Vec3::new(-0.5, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::red()), Diffuse::new()]),
+        Sphere::new(Vec3::new(0, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::green()), Diffuse::new()]),
+        Sphere::new(Vec3::new(0.5, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::blue()), Diffuse::new()]),
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());

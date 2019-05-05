@@ -8,6 +8,7 @@ use crate::texture::Texture;
 use crate::Object;
 use crate::Ray;
 use crate::Renderable;
+use crate::Vec3;
 
 /// Shape of an object in the scene
 pub trait Shape: Sized + 'static {
@@ -25,4 +26,10 @@ pub trait Shape: Sized + 'static {
     {
         Box::new(Object::new(self, textures))
     }
+}
+
+/// A shape that can get the normal given a point on the surface
+pub trait SurfaceNormal: Shape {
+    /// Get the normal of the shape at `position`
+    fn get_normal(&self, position: Vec3) -> Vec3;
 }

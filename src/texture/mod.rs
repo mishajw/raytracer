@@ -1,7 +1,9 @@
 //! Textures that can draw shapes in different ways
 
+mod diffuse;
 mod solid;
 
+pub use diffuse::Diffuse;
 pub use solid::Solid;
 
 use crate::shape::Shape;
