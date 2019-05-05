@@ -20,6 +20,21 @@ impl Ray {
 
     /// Get the point on the ray given by a scalar multiple of the direction
     pub fn point(&self, scalar: f64) -> Vec3 {
+        // We shouldn't have to back-trace rays anywhere
+        assert!(scalar >= 0.0);
         self.position + self.direction * scalar
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_point() {
+        let point = Ray::new(Vec3::new(1, 0, 2), Vec3::new(0, 1, 0)).point(5.0);
+        assert!((point.x - 1.0).abs() < 1e-6);
+        assert!((point.y - 5.0).abs() < 1e-6);
+        assert!((point.z - 2.0).abs() < 1e-6);
     }
 }
