@@ -17,6 +17,7 @@ use raytracer::texture::Solid;
 use raytracer::Camera;
 use raytracer::Color;
 use raytracer::Image;
+use raytracer::Light;
 use raytracer::Vec3;
 use raytracer::World;
 
@@ -54,7 +55,7 @@ fn simple() -> World {
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
-    World::new(camera, shapes, Color::black())
+    World::new(camera, shapes, vec![], Color::black())
 }
 
 fn diffuse() -> World {
@@ -68,7 +69,8 @@ fn diffuse() -> World {
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
-    World::new(camera, shapes, Color::black())
+    let lights = vec![Light::new(Vec3::new(-1, 1, 1), 1.0)];
+    World::new(camera, shapes, lights, Color::black())
 }
 
 fn save_image(image: Image, output_path: &Path) {

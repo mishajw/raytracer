@@ -5,6 +5,7 @@
 mod camera;
 mod color;
 mod image;
+mod light;
 pub mod math;
 mod object;
 mod ray;
@@ -18,6 +19,7 @@ mod world;
 pub use crate::image::Image;
 pub use camera::Camera;
 pub use color::Color;
+pub use light::Light;
 pub use object::Object;
 pub use object::Renderable;
 pub use ray::Ray;
