@@ -21,6 +21,8 @@ use raytracer::World;
 
 const WIDTH: usize = 600;
 const HEIGHT: usize = 400;
+const SMALL_WIDTH: usize = 60;
+const SMALL_HEIGHT: usize = 40;
 
 fn run(bench: &mut Criterion) {
     let simple_world = simple();
@@ -31,7 +33,7 @@ fn run(bench: &mut Criterion) {
 
     // Set up benchmarks
     bench.bench_function("simple", |b| {
-        b.iter(|| raytracer::render(&simple(), WIDTH, HEIGHT, 1.0))
+        b.iter(|| raytracer::render(&simple(), SMALL_WIDTH, SMALL_HEIGHT, 1.0))
     });
 }
 
