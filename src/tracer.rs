@@ -7,7 +7,7 @@ use crate::World;
 // TODO: Extract to interface so we can have different implementations of ray
 // tracing
 pub struct Tracer<'world> {
-    world: &'world World<'world>,
+    world: &'world World,
 }
 
 pub struct TraceResult<'shape> {
@@ -19,7 +19,7 @@ pub struct TraceResult<'shape> {
 
 impl<'world> Tracer<'world> {
     #[allow(missing_docs)]
-    pub fn new(world: &'world World<'world>) -> Tracer { Tracer { world } }
+    pub fn new(world: &World) -> Tracer { Tracer { world } }
 
     /// Trace the ray and get what object (if any) it collides with in the world
     pub fn trace(&self, ray: &Ray) -> Option<TraceResult<'world>> {

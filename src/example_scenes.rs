@@ -21,31 +21,30 @@ const WIDTH: usize = 600;
 const HEIGHT: usize = 400;
 
 fn run(bench: &mut Criterion) {
+    let simple_world = simple();
+
     // Write the images to the example-output directory
-    simple(|world| {
-        let image = raytracer::render(&world, WIDTH, HEIGHT, 1.0);
-        save_image(image, Path::new("examples-output/simple.png"));
-    });
+    let image = raytracer::render(&simple_world, WIDTH, HEIGHT, 1.0);
+    save_image(image, Path::new("examples-output/simple.png"));
 
     // Set up benchmarks
     bench.bench_function("simple", |b| {
-        simple(|world| b.iter(|| raytracer::render(&world, WIDTH, HEIGHT, 1.0)))
+        b.iter(|| raytracer::render(&simple(), WIDTH, HEIGHT, 1.0))
     });
 }
 
 criterion_group!(benches, run);
 criterion_main!(benches);
 
-fn simple(mut callback: impl FnMut(World)) {
-    let shapes = [
+fn simple() -> World {
+    let shapes = vec![
         Shape::sphere(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
         Shape::sphere(Vec3::new(0, 1, 0), 0.25, Color::green()),
         Shape::sphere(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());
-    let world = World::new(camera, &shapes, Color::black());
-    callback(world)
+    World::new(camera, shapes, Color::black())
 }
 
 fn save_image(image: Image, output_path: &Path) {
