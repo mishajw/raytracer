@@ -21,4 +21,16 @@ impl Color {
 
     #[allow(missing_docs)]
     pub fn black() -> Color { Color::new(0, 0, 0) }
+
+    /// Merge a list of colors by taking the average
+    pub fn merge(colors: &[Color]) -> Color {
+        let len = colors.len() as u8;
+        if len == 0 {
+            Color::black();
+        }
+        let red: u8 = colors.iter().map(|c| c.red).sum();
+        let green: u8 = colors.iter().map(|c| c.green).sum();
+        let blue: u8 = colors.iter().map(|c| c.blue).sum();
+        Color::new(red / len, green / len, blue / len)
+    }
 }

@@ -1,5 +1,5 @@
 use crate::Ray;
-use crate::Shape;
+use crate::Renderable;
 use crate::Vec3;
 use crate::World;
 
@@ -12,7 +12,7 @@ pub struct Tracer<'world> {
 
 pub struct TraceResult<'shape> {
     /// The shape that the ray collided with
-    pub shape: &'shape Shape,
+    pub renderable: &'shape Renderable,
     /// Where on the surface of the shape the collision happened
     pub collision_position: Vec3,
 }
@@ -24,7 +24,7 @@ impl<'world> Tracer<'world> {
     /// Trace the ray and get what object (if any) it collides with in the world
     pub fn trace(&self, ray: &Ray) -> Option<TraceResult<'world>> {
         self.world
-            .shapes
+            .renderables
             .iter()
             // Get pair of `(shape, ray scalar)`
             .flat_map(|shape| {
@@ -33,8 +33,8 @@ impl<'world> Tracer<'world> {
             // Get the lowest by `ray scalar`
             .min_by(|(_, s1), (_, s2)| s1.partial_cmp(s2).unwrap())
             // Map to a `TraceResult`
-            .map(|(shape, scalar)| TraceResult {
-                shape,
+            .map(|(renderable, scalar)| TraceResult {
+                renderable: &**renderable,
                 collision_position: ray.point(scalar),
             })
     }

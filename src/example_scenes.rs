@@ -10,10 +10,12 @@ use criterion::Criterion;
 use image::ImageBuffer;
 use image::Rgb;
 
+use raytracer::shape::Shape;
+use raytracer::shape::Sphere;
+use raytracer::texture::Solid;
 use raytracer::Camera;
 use raytracer::Color;
 use raytracer::Image;
-use raytracer::Shape;
 use raytracer::Vec3;
 use raytracer::World;
 
@@ -38,9 +40,12 @@ criterion_main!(benches);
 
 fn simple() -> World {
     let shapes = vec![
-        Shape::sphere(Vec3::new(-0.5, 1, 0), 0.25, Color::red()),
-        Shape::sphere(Vec3::new(0, 1, 0), 0.25, Color::green()),
-        Shape::sphere(Vec3::new(0.5, 1, 0), 0.25, Color::blue()),
+        Sphere::new(Vec3::new(-0.5, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::red())]),
+        Sphere::new(Vec3::new(0, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::green())]),
+        Sphere::new(Vec3::new(0.5, 1, 0), 0.25)
+            .with_textures(vec![Solid::new(Color::blue())]),
     ];
     let camera =
         Camera::new(Vec3::new(0, 0, 0), Vec3::new(0.001, 1, 0.001).unit());

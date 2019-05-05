@@ -41,7 +41,7 @@ pub fn render(
             let trace_result = tracer.trace(&ray);
             let color = match trace_result {
                 // If it does collide, ask the collided shape what color to draw
-                Some(result) => result.shape.get_color(
+                Some(result) => result.renderable.get_color(
                     &ray,
                     result.collision_position,
                     &tracer,
