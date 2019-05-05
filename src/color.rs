@@ -8,7 +8,10 @@ pub struct Color {
 }
 
 impl Color {
-    fn new(red: u8, green: u8, blue: u8) -> Color { Color { red, green, blue } }
+    #[allow(missing_docs)]
+    pub fn new(red: u8, green: u8, blue: u8) -> Color {
+        Color { red, green, blue }
+    }
 
     #[allow(missing_docs)]
     pub fn red() -> Color { Color::new(255, 0, 0) }

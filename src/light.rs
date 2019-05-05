@@ -2,8 +2,10 @@ use crate::Vec3;
 
 /// Point light in a scene
 pub struct Light {
-    position: Vec3,
-    intensity: f64,
+    /// Position of the light
+    pub position: Vec3,
+    /// Intensity of the light between 0-1
+    pub intensity: f64,
 }
 
 impl Light {

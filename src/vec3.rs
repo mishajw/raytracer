@@ -41,7 +41,13 @@ impl Vec3 {
         Vec3::new(self.x / magnitude, self.y / magnitude, self.z / magnitude)
     }
 
-    fn magnitude(&self) -> f64 {
+    /// Get the dot product between this vector and another
+    pub fn dot(&self, other: &Vec3) -> f64 {
+        self.x * other.x + self.y * other.y + self.z * other.z
+    }
+
+    /// Get the magnitude of the vector
+    pub fn magnitude(&self) -> f64 {
         (self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0)).sqrt()
     }
 }

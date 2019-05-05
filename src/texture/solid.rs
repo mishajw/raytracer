@@ -4,6 +4,7 @@ use crate::Color;
 use crate::Ray;
 use crate::Tracer;
 use crate::Vec3;
+use crate::World;
 
 /// Solid texture, showing a single color
 pub struct Solid {
@@ -22,6 +23,7 @@ impl<ShapeT: Shape> Texture<ShapeT> for Solid {
         _ray: &Ray,
         _position: Vec3,
         _tracer: &Tracer,
+        _world: &World,
     ) -> Color
     {
         self.color

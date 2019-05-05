@@ -4,6 +4,7 @@ use crate::Color;
 use crate::Ray;
 use crate::Tracer;
 use crate::Vec3;
+use crate::World;
 
 /// Can be rendered to the scene
 ///
@@ -18,8 +19,13 @@ pub trait Renderable {
     /// Get the color that a `ray` would see if it hit the shape at `position`
     ///
     /// `tracer` is passed so that new rays can be cast.
-    fn get_color(&self, _ray: &Ray, _position: Vec3, _tracer: &Tracer)
-        -> Color;
+    fn get_color(
+        &self,
+        ray: &Ray,
+        position: Vec3,
+        tracer: &Tracer,
+        world: &World,
+    ) -> Color;
 
     /// Check if a ray collides with this shape
     ///
@@ -42,12 +48,19 @@ impl<ShapeT: Shape> Object<ShapeT> {
 }
 
 impl<ShapeT: Shape> Renderable for Object<ShapeT> {
-    fn get_color(&self, ray: &Ray, position: Vec3, tracer: &Tracer) -> Color {
+    fn get_color(
+        &self,
+        ray: &Ray,
+        position: Vec3,
+        tracer: &Tracer,
+        world: &World,
+    ) -> Color
+    {
         Color::merge(
             &self
                 .textures
                 .iter()
-                .map(|t| t.get_color(&self.shape, ray, position, tracer))
+                .map(|t| t.get_color(&self.shape, ray, position, tracer, world))
                 .collect::<Vec<_>>(),
         )
     }

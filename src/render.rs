@@ -45,6 +45,7 @@ pub fn render(
                     &ray,
                     result.collision_position,
                     &tracer,
+                    &world,
                 ),
                 // If it doesn't collide, use the background color
                 None => world.background_color,

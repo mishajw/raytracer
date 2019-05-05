@@ -11,6 +11,7 @@ use crate::Color;
 use crate::Ray;
 use crate::Tracer;
 use crate::Vec3;
+use crate::World;
 
 /// Defines how a shape should appear when rendering
 pub trait Texture<ShapeT: Shape> {
@@ -23,5 +24,6 @@ pub trait Texture<ShapeT: Shape> {
         ray: &Ray,
         position: Vec3,
         tracer: &Tracer,
+        world: &World,
     ) -> Color;
 }

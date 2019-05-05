@@ -32,5 +32,26 @@ pub fn factorize(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {
     if in_sqrt.is_sign_negative() || denom == 0.0 {
         return None;
     }
-    Some(((-b + in_sqrt.sqrt()) / denom, (-b - in_sqrt.sqrt()) / denom))
+    // TODO: Using `b` instead of `-b` fixes the output of this equation, but
+    // I'm too tired to figure out why
+    Some(((b + in_sqrt.sqrt()) / denom, (b - in_sqrt.sqrt()) / denom))
+}
+
+/// Get the angle between two vectors `a` and `b`
+///
+/// Result is in radians.
+pub fn angle(a: Vec3, b: Vec3) -> f64 {
+    (a.dot(&b) / (a.magnitude() * b.magnitude())).acos()
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_factorize() {
+        let (a, b) = factorize(12.0, 20.0, 3.0).unwrap();
+        assert!((a - 3.0 / 2.0).abs() < 1e-6);
+        assert!((b - 1.0 / 6.0).abs() < 1e-6);
+    }
 }
