@@ -4,7 +4,7 @@ use std::ops::Sub;
 
 /// Vector with 3 dimensions
 #[allow(missing_docs)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,

@@ -1,6 +1,7 @@
 use crate::Vec3;
 
 /// Point light in a scene
+#[derive(Debug)]
 pub struct Light {
     /// Position of the light
     pub position: Vec3,
