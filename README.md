@@ -4,7 +4,7 @@ Simple toy ray tracer implemented in Rust.
 
 ## Examples
 
-### `cargo run --example simple`
+### Simple example
 
 ![simple](/examples-output/simple.png "Simple example")
 

@@ -4,5 +4,9 @@ version = "0.1.0"
 authors = ["Misha Wagner <mishajw@gmail.com>"]
 edition = "2018"
 
+[[bin]]
+name = "example-scenes"
+path = "src/example_scenes.rs"
+
 [dependencies]
 image = "*"
