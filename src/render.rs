@@ -1,3 +1,4 @@
+use crate::get_color_for_ray;
 use crate::math;
 use crate::Image;
 use crate::Ray;
@@ -37,19 +38,8 @@ pub fn render(
                 world.camera.position,
                 (image_point - world.camera.position).unit(),
             );
-            // Get what the ray collides with
-            let trace_result = tracer.trace(&ray);
-            let color = match trace_result {
-                // If it does collide, ask the collided shape what color to draw
-                Some(result) => result.renderable.get_color(
-                    &ray,
-                    result.collision_position,
-                    &tracer,
-                    &world,
-                ),
-                // If it doesn't collide, use the background color
-                None => world.background_color,
-            };
+            // Get the color that the ray "sees"
+            let color = get_color_for_ray(&ray, &tracer, &world);
             image.put(image_x, image_y, color)
         }
     }

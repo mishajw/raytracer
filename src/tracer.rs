@@ -1,3 +1,4 @@
+use crate::Color;
 use crate::Ray;
 use crate::Renderable;
 use crate::Vec3;
@@ -37,5 +38,21 @@ impl<'world> Tracer<'world> {
                 renderable: &**renderable,
                 collision_position: ray.point(scalar),
             })
+    }
+}
+
+/// Get the color that a ray would hit using a tracer
+pub fn get_color_for_ray(ray: &Ray, tracer: &Tracer, world: &World) -> Color {
+    let trace_result = tracer.trace(&ray);
+    match trace_result {
+        // If it does collide, ask the collided shape what color to draw
+        Some(result) => result.renderable.get_color(
+            &ray,
+            result.collision_position,
+            &tracer,
+            &world,
+        ),
+        // If it doesn't collide, use the background color
+        None => world.background_color,
     }
 }

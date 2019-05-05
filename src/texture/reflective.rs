@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 
+use crate::get_color_for_ray;
 use crate::shape::Shape;
 use crate::shape::SurfaceNormal;
 use crate::texture::Texture;
@@ -35,19 +36,7 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Reflective<ShapeT> {
     {
         // TODO: Use reflective angle instead of normal
         let normal = shape.get_normal(position);
-        // TODO: Share this common code in `render.rs`
         let ray = Ray::new(position, normal);
-        let trace_result = tracer.trace(&ray);
-        match trace_result {
-            // If it does collide, ask the collided shape what color to draw
-            Some(result) => result.renderable.get_color(
-                &ray,
-                result.collision_position,
-                &tracer,
-                &world,
-            ),
-            // If it doesn't collide, use the background color
-            None => world.background_color,
-        }
+        get_color_for_ray(&ray, &tracer, &world)
     }
 }

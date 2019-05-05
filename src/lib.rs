@@ -24,6 +24,7 @@ pub use object::Object;
 pub use object::Renderable;
 pub use ray::Ray;
 pub use render::render;
+pub use tracer::get_color_for_ray;
 pub use tracer::Tracer;
 pub use vec3::Vec3;
 pub use world::World;
