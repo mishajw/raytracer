@@ -50,6 +50,19 @@ pub fn angle(a: Vec3, b: Vec3) -> f64 {
 /// off `n`, calculate the direction of the reflected ray
 pub fn reflect(d: Vec3, n: Vec3) -> Vec3 { d - n * (2.0 * (d.dot(&n))) }
 
+/// Get the closest intersection point on a ray
+///
+/// Given a list of locations on a ray (where 0 is at the start of the ray, and
+/// >0 is along the ray), get the closest value to the start of the ray.
+pub fn closest_intersection(intersections: &[f64]) -> Option<f64> {
+    intersections
+        .into_iter()
+        // Negative means that its before the ray
+        .filter(|a| **a >= 0.0)
+        .min_by(|a, b| a.partial_cmp(b).unwrap())
+        .map(|a| *a)
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

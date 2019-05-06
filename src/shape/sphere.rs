@@ -26,15 +26,8 @@ impl Shape for Sphere {
         let b = (2.0 * d.x * c.x) + (2.0 * d.y * c.y) + (2.0 * d.z * c.z);
         let c = c.x.powf(2.0) + c.y.powf(2.0) + c.z.powf(2.0);
         match math::factorize(a, b, c - self.radius.powf(2.0)) {
-            Some((x, y)) => {
-                // Return the lowest non-negative value
-                if x >= 0.0 && (y < 0.0 || x < y) {
-                    Some(x)
-                } else if y >= 0.0 {
-                    Some(y)
-                } else {
-                    None
-                }
+            Some((intersection_1, intersection_2)) => {
+                math::closest_intersection(&[intersection_1, intersection_2])
             }
             None => None,
         }
