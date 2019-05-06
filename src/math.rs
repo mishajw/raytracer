@@ -44,6 +44,12 @@ pub fn angle(a: Vec3, b: Vec3) -> f64 {
     (a.dot(&b) / (a.magnitude() * b.magnitude())).acos()
 }
 
+/// Get the reflection vector
+///
+/// Given the direction of a ray `d`, and the normal of the surface it reflects
+/// off `n`, calculate the direction of the reflected ray
+pub fn reflect(d: Vec3, n: Vec3) -> Vec3 { d - n * (2.0 * (d.dot(&n))) }
+
 #[cfg(test)]
 mod test {
     use super::*;

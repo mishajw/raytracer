@@ -1,6 +1,7 @@
 use std::marker::PhantomData;
 
 use crate::get_color_for_ray;
+use crate::math;
 use crate::shape::Shape;
 use crate::shape::SurfaceNormal;
 use crate::texture::Texture;
@@ -28,15 +29,15 @@ impl<ShapeT: Shape + SurfaceNormal> Texture<ShapeT> for Reflective<ShapeT> {
     fn get_color(
         &self,
         shape: &ShapeT,
-        _ray: &Ray,
+        ray: &Ray,
         position: Vec3,
         tracer: &Tracer,
         world: &World,
     ) -> Color
     {
-        // TODO: Use reflective angle instead of normal
         let normal = shape.get_normal(position);
-        let ray = Ray::new(position, normal);
+        let reflection = math::reflect(ray.direction, normal);
+        let ray = Ray::new(position, reflection);
         get_color_for_ray(&ray, &tracer, &world)
     }
 }
