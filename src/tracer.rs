@@ -29,8 +29,14 @@ impl<'world> Tracer<'world> {
             .iter()
             // Get pair of `(shape, ray scalar)`
             .flat_map(|shape| {
-                shape.get_collision(&ray).map(|scalar| (shape, scalar))
+                shape
+                    .get_collision(&ray)
+                    .into_iter()
+                    .map(|scalar| (shape, scalar))
+                    .collect::<Vec<_>>()
             })
+            // Negative values are behind the start of the ray, so ignore them
+            .filter(|(_, s)| *s >= 0.0)
             // Get the lowest by `ray scalar`
             .min_by(|(_, s1), (_, s2)| s1.partial_cmp(s2).unwrap())
             // Map to a `TraceResult`

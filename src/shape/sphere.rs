@@ -18,7 +18,7 @@ impl Sphere {
 }
 
 impl Shape for Sphere {
-    fn get_collision(&self, ray: &Ray) -> Option<f64> {
+    fn get_collision(&self, ray: &Ray) -> Vec<f64> {
         // Make the ray's centre the origin to simplify
         let c = self.centre - ray.position;
         let d = ray.direction;
@@ -27,9 +27,9 @@ impl Shape for Sphere {
         let c = c.x.powf(2.0) + c.y.powf(2.0) + c.z.powf(2.0);
         match math::factorize(a, b, c - self.radius.powf(2.0)) {
             Some((intersection_1, intersection_2)) => {
-                math::closest_intersection(&[intersection_1, intersection_2])
+                vec![intersection_1, intersection_2]
             }
-            None => None,
+            None => vec![],
         }
     }
 }

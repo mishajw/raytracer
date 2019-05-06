@@ -31,7 +31,7 @@ pub trait Renderable {
     ///
     /// If it does collide, return the scalar multiple of `ray.direction` where
     /// the ray meets the shape.
-    fn get_collision(&self, ray: &Ray) -> Option<f64>;
+    fn get_collision(&self, ray: &Ray) -> Vec<f64>;
 }
 
 /// An object in the scene
@@ -65,7 +65,7 @@ impl<ShapeT: Shape> Renderable for Object<ShapeT> {
         )
     }
 
-    fn get_collision(&self, ray: &Ray) -> Option<f64> {
+    fn get_collision(&self, ray: &Ray) -> Vec<f64> {
         self.shape.get_collision(ray)
     }
 }

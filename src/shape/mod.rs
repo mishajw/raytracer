@@ -16,7 +16,7 @@ pub trait Shape: Sized + 'static {
     ///
     /// If it does collide, return the scalar multiple of `ray.direction` where
     /// the ray meets the shape.
-    fn get_collision(&self, ray: &Ray) -> Option<f64>;
+    fn get_collision(&self, ray: &Ray) -> Vec<f64>;
 
     /// Make the shape renderable by giving it textures
     fn with_textures(
