@@ -11,7 +11,7 @@ use crate::World;
 /// The only implementation of this is `Object`, but we have to separate the
 /// trait from the implementation. This is because we can't store a list of
 /// `Object<T>` in `World` as `T` changes from item to item. Therefore, we
-/// introduce `Renderable` so that `World` can hold a list of `Obejct<T>`/
+/// introduce `Renderable` so that `World` can hold a list of `Object<T>`/
 /// `Renderable`.
 ///
 /// TODO: Is there a better work around?
