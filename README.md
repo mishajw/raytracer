@@ -6,15 +6,15 @@ Simple toy ray tracer implemented in Rust.
 
 ### Simple example
 
-![simple](/examples-output/simple.png "Simple example")
+![simple](examples-output/simple.png "Simple example")
 
 ### Diffuse texture example
 
-![diffuse](/examples-output/diffuse.png "Diffuse texture example")
+![diffuse](examples-output/diffuse.png "Diffuse texture example")
 
 ### Reflective texture example
 
-![reflective](/examples-output/reflective.png "Reflective texture example")
+![reflective](examples-output/reflective.png "Reflective texture example")
 
 ## Goals
 
