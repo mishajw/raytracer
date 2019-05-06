@@ -9,6 +9,7 @@
 //! For example:
 //!
 //! ```rust
+//! # use std::f64;
 //! # use raytracer::render;
 //! # use raytracer::shape::{Shape, Sphere};
 //! # use raytracer::texture::{Diffuse, Solid, Texture};
@@ -22,7 +23,7 @@
 //! let world = World::new(camera, shapes, vec![], Color::black());
 //!
 //! // Set the image width, image height, and field of view
-//! let image = render(&world, 800, 600, 1.0);
+//! let image = render(&world, 800, 600, f64::consts::PI / 3.0);
 //! ```
 //!
 //! ## Algorithm

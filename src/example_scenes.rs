@@ -3,6 +3,7 @@ extern crate criterion;
 extern crate image;
 extern crate raytracer;
 
+use std::f64;
 use std::fs;
 use std::path::Path;
 
@@ -26,15 +27,16 @@ const WIDTH: usize = 600;
 const HEIGHT: usize = 400;
 const SMALL_WIDTH: usize = 60;
 const SMALL_HEIGHT: usize = 40;
+const FOV: f64 = f64::consts::PI / 3.0;
 
 fn run(bench: &mut Criterion) {
     // Write the images to the example-output directory
     println!("Creating images in ./examples-output");
-    let simple_image = raytracer::render(&simple(), WIDTH, HEIGHT, 1.0);
+    let simple_image = raytracer::render(&simple(), WIDTH, HEIGHT, FOV);
     save_image(simple_image, Path::new("examples-output/simple.png"));
-    let diffuse_image = raytracer::render(&diffuse(), WIDTH, HEIGHT, 1.0);
+    let diffuse_image = raytracer::render(&diffuse(), WIDTH, HEIGHT, FOV);
     save_image(diffuse_image, Path::new("examples-output/diffuse.png"));
-    let reflective_image = raytracer::render(&reflective(), WIDTH, HEIGHT, 1.0);
+    let reflective_image = raytracer::render(&reflective(), WIDTH, HEIGHT, FOV);
     save_image(
         reflective_image,
         Path::new("examples-output/reflective.png"),
@@ -43,7 +45,7 @@ fn run(bench: &mut Criterion) {
 
     // Set up benchmarks
     bench.bench_function("simple", |b| {
-        b.iter(|| raytracer::render(&simple(), SMALL_WIDTH, SMALL_HEIGHT, 1.0))
+        b.iter(|| raytracer::render(&simple(), SMALL_WIDTH, SMALL_HEIGHT, FOV))
     });
 }
 
