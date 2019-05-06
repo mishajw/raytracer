@@ -25,11 +25,7 @@ impl Vec3 {
         assert!(x.is_finite());
         assert!(y.is_finite());
         assert!(z.is_finite());
-        Vec3 {
-            x: x.into(),
-            y: y.into(),
-            z: z.into(),
-        }
+        Vec3 { x, y, z }
     }
 
     /// Check if the vector has unit length
